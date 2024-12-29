@@ -10,12 +10,12 @@ _serv_dst="/etc/systemd/system"
 _timer_dst="/etc/systemd/system"
 
 # Update or create the drop-in for systemd-resolved
-mkdir -p -v "$_conf_dst"
-cp -f -v 70-adblock.conf "$_conf_dst"
+mkdir -p "$_conf_dst"
+cp -f 70-adblock.conf "$_conf_dst"
 
 # Create or replace the default hosts list (localhost)
-mkdir -p -v "$_logs_dst"
-cp -f -v .hosts /etc
+mkdir -p "$_logs_dst"
+cp -f .hosts /etc
 
 # Create or replace the adblock list retrieval script
 mkdir -p "$_sh_dst"
