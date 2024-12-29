@@ -20,6 +20,7 @@ cp -f .hosts /etc
 # Create or replace the adblock list retrieval script
 mkdir -p "$_sh_dst"
 cp -f adhosts.sh "$_sh_dst"
+chmod 0744 "${_sh_dst}/adhosts.sh"
 mkdir -p "$_timer_dst"
 cp -f adhosts.timer "$_timer_dst"
 mkdir -p "$_serv_dst"
