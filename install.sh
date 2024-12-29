@@ -5,7 +5,7 @@
 
 _conf_dst="/etc/systemd/resolved.conf.d"
 _logs_dst="/etc/adhosts/logs"
-_sh_dst="/etc/adhosts"
+_sh_dst="/usr/local/bin"
 _serv_dst="/etc/systemd/system"
 _timer_dst="/etc/systemd/system"
 

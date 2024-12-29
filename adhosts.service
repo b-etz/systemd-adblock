@@ -7,7 +7,7 @@ Description=Update ad serving domains in /etc/hosts
 After=network.target
 
 [Service]
-ExecStart=/etc/adhosts/adhosts.sh
+ExecStart=/usr/local/bin/adhosts.sh
 Type=oneshot
 
 #EOF

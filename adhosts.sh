@@ -7,8 +7,8 @@
 # 0.0.0.0 <FQDN>
 # To complement the built-in /etc/hosts file
 
-_tmp=$(mktemp)
 _in="/etc/.hosts"
+_tmp=$(mktemp)
 _out="/etc/hosts"
 _logfile="/etc/adhosts/logs/adhosts_log_$(date +"%Y-%m-%d_%H%M%S").log"
 
@@ -47,23 +47,23 @@ function adblockplus { # OISD is the AdBlock Plus filter list
 }
 
 # You can add many (b)ad host lists. Many are updated regularly on GitHub, etc.
-cat "$_in" > "$_tmp"
+cp -f -v "$_in" "$_tmp"
 # Comment out any lines you don't want, or add more below:
-adguardhome >> "$_tmp"
-stevenblack >> "$_tmp"
-ublockorigin >> "$_tmp"
+adguardhome   >> "$_tmp"
+stevenblack   >> "$_tmp"
+ublockorigin  >> "$_tmp"
 stopforumspam >> "$_tmp"
-adblockplus >> "$_tmp"
+adblockplus   >> "$_tmp"
 
 # Clean up
 grep -v "t.co\|\\\\" "$_tmp" | sort -u -o "$_tmp"
 chmod 0644 "$_tmp"
 
 # If there are different entries, update
-diff -Nq "$_out" "$_tmp" 1>>"$_logfile"
+diff -Nq "$_out" "$_tmp" 1>> "$_logfile"
 case $? in
 	0) rm "$_tmp" && exit 0;; # No changes
-	1) mv -fu "$_tmp" "$_out";;
+	1) cp -f "$_tmp" "$_out";;
 	*) echo "$0: something bad happened!"; exit 1;;
 esac
 exit 0
