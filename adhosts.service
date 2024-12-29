@@ -1,0 +1,13 @@
+# /etc/systemd/system/adhosts.service
+# Copyright 2024 (c) Brady Etz, https://github.com/b-etz/local-adblock_fedora
+# Runnable service to scrape and format ad hosting domains with adhosts.sh
+
+[Unit]
+Description=Update ad serving domains in /etc/hosts
+After=network.target
+
+[Service]
+ExecStart=/etc/adhosts/adhosts.sh
+Type=oneshot
+
+#EOF

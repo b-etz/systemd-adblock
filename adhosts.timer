@@ -1,0 +1,16 @@
+# /etc/systemd/system/adhosts.timer
+# Copyright 2024 (c) Brady Etz, https://github.com/b-etz/local-adblock_fedora
+# Runnable service to run adhosts.service daily when the machine is active
+
+[Unit]
+Description=Update ad serving domains in /etc/hosts
+After=network.target
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+RandomizedDelaySec=2h
+
+[Install]
+WantedBy=timers.target
+

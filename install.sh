@@ -3,23 +3,36 @@
 # Copyright 2024 (c) Brady Etz, https://github.com/b-etz/local-adblock_fedora
 # Implement local ad blocking using systemd-resolved
 
+_conf_dst="/etc/systemd/resolved.conf.d"
+_logs_dst="/etc/adhosts/logs"
+_sh_dst="/etc/adhosts"
+_serv_dst="/etc/systemd/system"
+_timer_dst="/etc/systemd/system"
+
 # Update or create the drop-in for systemd-resolved
-mkdir -p /etc/systemd/resolved.conf.d
-cp -f 70-adblock.conf /etc/systemd/resolved.conf.d
+mkdir -p -v "$_conf_dst"
+cp -f -v 70-adblock.conf "$_conf_dst"
 
 # Create or replace the default hosts list (localhost)
-mkdir -p /etc/systemd/logs.d/
-cp -f .hosts /etc
+mkdir -p -v "$_logs_dst"
+cp -f -v .hosts /etc
 
 # Create or replace the adblock list retrieval script
-cp -f get_adhosts.sh /etc/cron.weekly
-chmod +x /etc/cron.weekly/get_adhosts.sh
+mkdir -p "$_sh_dst"
+cp -f adhosts.sh "$_sh_dst"
+mkdir -p "$_timer_dst"
+cp -f adhosts.timer "$_timer_dst"
+mkdir -p "$_serv_dst"
+cp -f adhosts.service "$_serv_dst"
 
-# Generate adhosts.block and check Unbound's configuration
-/bin/bash /etc/cron.weekly/get_adhosts.sh
+# Generate ad hosting domains in /etc/hosts immediately
+systemctl daemon-reload
+systemctl start adhosts.service
 
-# Enable and restart systemd-resolved
+# Enable and restart systemd-resolved and the daily systemd.timer
+systemctl enable --now adhosts.timer
 systemctl enable systemd-resolved
 systemctl restart systemd-resolved
+
 exit 0
 #EOF

@@ -1,5 +1,5 @@
 #!/bin/bash
-# /etc/cron.weekly/get_adhosts.sh
+# adhosts.sh
 # Copyright 2024 (c) Brady Etz, https://github.com/b-etz/local-adblock_fedora
 # Scrape and format ad hosting domains
 #
@@ -10,7 +10,7 @@
 _tmp=$(mktemp)
 _in="/etc/.hosts"
 _out="/etc/hosts"
-_logfile="/etc/systemd/logs.d/adhosts_log_$(date +"%Y-%m-%d_%H%M%S").log"
+_logfile="/etc/adhosts/logs/adhosts_log_$(date +"%Y-%m-%d_%H%M%S").log"
 
 function adguardhome { # Same lists as AdGuard
 	_src="https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt"
