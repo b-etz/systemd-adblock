@@ -36,6 +36,7 @@ function ublockorigin { # Same lists as uBlock Origin, but without browser plugi
 
 function stopforumspam { # StopForumSpam list
 	_src="https://www.stopforumspam.com/downloads/toxic_domains_whole.txt"
+# To exclude top domains from this spam list, comment out the above line and uncomment below:
 #	_src="https://www.stopforumspam.com/downloads/toxic_domains_whole_filtered_1000.txt"
 	wget -a "$_logfile" -O - "$_src" | awk '{ print "0.0.0.0 " $1 }'
 }
@@ -62,8 +63,8 @@ chmod 0644 "$_tmp"
 # If there are different entries, update
 diff -Nq "$_out" "$_tmp" 1>> "$_logfile"
 case $? in
-	0) rm "$_tmp" && exit 0;; # No changes
-	1) cp -f "$_tmp" "$_out";;
+	0) rm -v "$_tmp";; # No changes
+	1) cp -f -v "$_tmp" "$_out"; rm -v "$_tmp"; systemctl restart systemd-resolved;;
 	*) echo "$0: something bad happened!"; exit 1;;
 esac
 exit 0
