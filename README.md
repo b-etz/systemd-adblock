@@ -36,6 +36,10 @@ If you check the status of ``systemd-resolved``, there should be no errors/failu
 ```
 $ systemctl status systemd-resolved
 ```
+Finally, the list of ``systemd.timer``s can be inspected with:
+```
+$ systemctl list-timers --all
+```
 
 ### Update Instructions
 If this tool has had a new revision and you want to adopt the changes:
