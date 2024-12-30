@@ -48,6 +48,7 @@ function adblockplus { # OISD is the AdBlock Plus filter list
 }
 
 # You can add many (b)ad host lists. Many are updated regularly on GitHub, etc.
+echo "Creating temporary list..."
 cp -f -v "$_in" "$_tmp"
 # Comment out any lines you don't want, or add more below:
 adguardhome   >> "$_tmp"
@@ -57,14 +58,15 @@ stopforumspam >> "$_tmp"
 adblockplus   >> "$_tmp"
 
 # Clean up
+echo "Pruning list and sorting..."
 grep -v "t.co\|\\\\" "$_tmp" | sort -u -o "$_tmp"
 chmod 0644 "$_tmp"
 
 # If there are different entries, update
 diff -Nq "$_out" "$_tmp" 1>> "$_logfile"
 case $? in
-	0) rm -v "$_tmp";; # No changes
-	1) cp -f -v "$_tmp" "$_out"; rm -v "$_tmp"; systemctl restart systemd-resolved;;
+	0) echo "No changes..."; rm -v "$_tmp";; # No changes
+	1) echo "Updating /etc/hosts..."; cp -f -v "$_tmp" "$_out"; rm -v "$_tmp"; systemctl restart systemd-resolved;;
 	*) echo "$0: something bad happened!"; exit 1;;
 esac
 exit 0
