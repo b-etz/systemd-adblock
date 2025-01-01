@@ -1,7 +1,7 @@
 #!/bin/bash
 # install.sh
-# Copyright 2024 (c) Brady Etz, https://github.com/b-etz/local-adblock_fedora
-# Implement local ad blocking using systemd-resolved
+# implement local ad blocking using systemd-resolved, or update existing
+# Copyright 2024 (c) Brady Etz, https://github.com/b-etz/systemd-adblock
 
 _conf_dst="/etc/systemd/resolved.conf.d"
 _logs_dst="/etc/adhosts/logs"
