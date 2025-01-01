@@ -1,7 +1,7 @@
 #!/bin/bash
 # adhosts.sh
-# Copyright 2024 (c) Brady Etz, https://github.com/b-etz/local-adblock_fedora
-# Scrape and format ad hosting domains
+# scrape and format ad hosting domains
+# Copyright 2024 (c) Brady Etz, https://github.com/b-etz/systemd-adblock
 #
 # Produces a list at /etc/hosts of the format:
 # 0.0.0.0 <FQDN>
