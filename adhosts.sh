@@ -11,6 +11,8 @@ _in="/etc/.hosts"
 _tmp=$(mktemp)
 _out="/etc/hosts"
 _logfile="/etc/adhosts/logs/adhosts_log_$(date +"%Y-%m-%d_%H%M%S").log"
+_test_ip="9.9.9.9"
+_test_connectivity=true
 
 function adguardhome { # Same lists as AdGuard
 	_src="https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt"
@@ -46,6 +48,12 @@ function adblockplus { # OISD is the AdBlock Plus filter list
 	wget -a "$_logfile" -O - "$_src" | \
 		sed -nre 's/^\|\|([a-zA-Z0-9\_\-\.]+)\^$/0.0.0.0 \1/p'
 }
+
+if $_test_connectivity; then
+	ping -q -w1 -c1 9.9.9.9 > /dev/null \
+	&& echo "Internet connectivity test passed..." \
+	|| (echo "Internet connectivity test failed!!"; exit 2) 
+fi
 
 # You can add many (b)ad host lists. Many are updated regularly on GitHub, etc.
 echo "Creating temporary list..."
