@@ -9,6 +9,9 @@ _sh_dst="/usr/local/bin"
 _serv_dst="/etc/systemd/system"
 _timer_dst="/etc/systemd/system"
 
+# Install systemd-resolved if not already present
+apt install -y systemd-resolved
+
 # Update or create the drop-in for systemd-resolved
 mkdir -p "$_conf_dst"
 cp -f 70-adblock.conf "$_conf_dst"
