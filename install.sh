@@ -10,7 +10,16 @@ _serv_dst="/etc/systemd/system"
 _timer_dst="/etc/systemd/system"
 
 # Install systemd-resolved if not already present
-apt install -y systemd-resolved
+if [ -n "$(command -v resolvectl)" ]; then
+    :
+elif [ -n "$(command -v apt)" ]; then
+    apt install -y systemd-resolved
+elif [ -n "$(command -v dnf)" ]; then
+    dnf install -y systemd-resolved
+else
+    echo "ERROR: Please install systemd-resolved using your package manager, then run install.sh again!! Exiting.";
+    exit 1;
+fi
 
 # Update or create the drop-in for systemd-resolved
 mkdir -p "$_conf_dst"
